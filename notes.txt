@@ -1,0 +1,65 @@
+Create a server that stores in the following format:
+
+(Can't handle hash...)
+
+Response contains:
+
+``` javascript
+var match = grunt.file.readJSON(fixturePath);
+
+// Match on port, user, password, protocol, & search,
+// Should also match on all headers. `res.headers`, `res.method`.
+
+``` json
+// MUST MATCH:
+{
+  "protocol": "",
+  "search": "",
+  "port": 0,
+  "username": "",
+  "password": "",
+  "headers": {},
+  "method": ""
+}
+```
+
+Compare all the values, otherwise make a new Object.  Encode in the following
+format:
+
+http://host:port/pathname
+
+var out = "fixtures";
+var encode = encodeURIComponent;
+
+// Location
+var fixturePath = path.join(out, encode(url.host), encode(url.href) + ".json");
+
+// Write the fixture... (super naive, no append).
+grunt.file.write(fixturePath, JSON.stringify(response.body));
+
+encodeURIComponent(pathname) converted
+
+
+Record and instrument.
+
+---
+
+grunt.config("mrmime", {
+  options: {
+    mock: "local.dev.hbr.org",
+    out: "fixtures",
+    ignore: ["???"]
+  },
+
+  record: {
+    options: {
+      mode: "record",
+    }
+  },
+
+  instrument: {
+    mock: {
+      mode: "instrument"
+    }
+  }
+});
